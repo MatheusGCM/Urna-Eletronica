@@ -142,6 +142,7 @@ const style = StyleSheet.create({
       width: '90%',
       height: '43%',
       backgroundColor: '#3A3126',
+      borderRadius: 5
     },
     numeroTeclado: {
       width: '100%',
@@ -149,6 +150,7 @@ const style = StyleSheet.create({
       flexWrap: 'wrap',
       flexDirection: 'row',
       justifyContent: 'center',
+      
     },
     botaoN: {
       width: 80,

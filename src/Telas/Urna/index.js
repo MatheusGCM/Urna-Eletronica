@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -8,11 +8,44 @@ import {
   Modal,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import style from './style'
+import style from './style';
+import Candidato from '../../mocks/Candidato';
 
 function Urna() {
   const [modalVisible, setModalVisible] = useState(false);
   const lista = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+  const [numero, setNumero] = useState([]);
+  const [candidato, setCandidato] = useState(Candidato);
+  const [nome, setNome] = useState('');
+  const [partido, setPartido] = useState('');
+  const [slogan, setSlogan] = useState('');
+  const [perfil,setPerfil] = useState()
+
+  useEffect(() => {
+    if (numero.length === 2) {
+      candidato.map(item => {
+        if (numero === item.numero) {
+          setNome(item.nome);
+          setPartido(item.partido);
+          setSlogan(item.slogan);
+          setPerfil(item.img)
+          console.log(item);
+        } 
+      });
+    } else {
+      setNome('');
+      setPartido('');
+      setSlogan('');
+      setPerfil()
+    }
+  }, [numero]);
+
+  function guardar(dados) {
+    if (numero.length < 2) setNumero(numero + dados);
+  }
+
+  
+
   return (
     <View style={style.background}>
       <View style={style.Cima}>
@@ -100,10 +133,10 @@ function Urna() {
                 />
               </View>
             </View>
-            <View style={{width: '100%', height: '35%'}}>
+            <View style={{width: '90%', height: '35%',backgroundColor:"#F3F3F3",alignSelf:'center'}}>
               <Image
                 style={{width: '100%', height: '100%', resizeMode: 'contain'}}
-                source={require('../../assets/Candidato.jpg')}
+                source={perfil}
               />
             </View>
             <View
@@ -113,30 +146,47 @@ function Urna() {
                 paddingHorizontal: 20,
                 paddingVertical: 15,
               }}>
-              <Text style={style.textoCandidato}>Candidato: dsdsds</Text>
-              <Text style={style.textoCandidato}>Número: 58</Text>
               <Text style={style.textoCandidato}>
-                Partido: Partido dos Nativos
+                Candidato: {nome ? nome : null}
+              </Text>
+              <Text style={style.textoCandidato}>
+                Número: {numero ? numero : null}
+              </Text>
+              <Text style={style.textoCandidato}>
+                Partido: {partido ? partido : null}
               </Text>
             </View>
           </View>
           <View style={style.teclado}>
             <View style={style.numeroTeclado}>
               {lista.map((item, index) => (
-                <TouchableOpacity key={index} style={style.botaoN}>
+                <TouchableOpacity
+                  onPress={() => guardar(item)}
+                  key={index}
+                  style={style.botaoN}>
                   <Text style={{color: '#FFFFFF'}}>{item}</Text>
                 </TouchableOpacity>
               ))}
             </View>
             <View style={style.textoTeclado}>
-              <TouchableOpacity style={style.botaoBranco}>
-                <Text style={{color: 'black',fontWeight:'800'}}>Branco</Text>
+              <TouchableOpacity
+                onPress={() => guardar('branco')}
+                style={style.botaoBranco}>
+                <Text style={{color: 'black', fontWeight: '800'}}>Branco</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={style.botaoCorrige}>
-                <Text style={{color: 'black',fontWeight:'800'}}>Corrige</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  setNumero([]);
+                }}
+                style={style.botaoCorrige}>
+                <Text style={{color: 'black', fontWeight: '800'}}>Corrige</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={style.botaoConfirma}>
-                <Text style={{color: 'black',fontWeight:'800'}}>Confirma </Text>
+              <TouchableOpacity
+                onPress={() => guardar('Confirma')}
+                style={style.botaoConfirma}>
+                <Text style={{color: 'black', fontWeight: '800'}}>
+                  Confirma{' '}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
