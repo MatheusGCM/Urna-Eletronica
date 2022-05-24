@@ -19,7 +19,15 @@ function Urna() {
   const [nome, setNome] = useState('');
   const [partido, setPartido] = useState('');
   const [slogan, setSlogan] = useState('');
-  const [perfil,setPerfil] = useState()
+  const [perfil, setPerfil] = useState();
+  const [totalVotos, setTotalVotos] = useState(0);
+
+  const [nomeL, setNomeL] = useState('');
+  const [partidoL, setPartidoL] = useState('');
+  const [sloganL, setSloganL] = useState('');
+  const [perfilL, setPerfilL] = useState();
+  const [numeroL, setNumeroL] = useState([]);
+
 
   useEffect(() => {
     if (numero.length === 2) {
@@ -28,15 +36,15 @@ function Urna() {
           setNome(item.nome);
           setPartido(item.partido);
           setSlogan(item.slogan);
-          setPerfil(item.img)
+          setPerfil(item.img);
           console.log(item);
-        } 
+        }
       });
     } else {
       setNome('');
       setPartido('');
       setSlogan('');
-      setPerfil()
+      setPerfil();
     }
   }, [numero]);
 
@@ -44,7 +52,27 @@ function Urna() {
     if (numero.length < 2) setNumero(numero + dados);
   }
 
-  
+  function confirmar() {
+    if (numero.length === 2) {
+      candidato.map(item => {
+        if (numero === item.numero) {
+          item.votacao += 1;
+          setTotalVotos(totalVotos + 1);
+          setModalVisible(false);
+          setNomeL(item.nome);
+          setPartidoL(item.partido);
+          setSloganL(item.slogan);
+          setPerfilL(item.img);
+          setNumeroL(numero)
+          setNome('');
+          setPartido('');
+          setSlogan('');
+          setPerfil();
+          setNumero([])
+        }
+      });
+    }
+  }
 
   return (
     <View style={style.background}>
@@ -53,13 +81,14 @@ function Urna() {
           <View style={style.boxImage}>
             <Image
               style={style.candidato}
-              source={require('../../assets/Candidato.jpg')}
+              source={perfilL}
             />
-            <Text style={style.numeroCandidato}>Numero 123</Text>
+            <Text style={style.numeroCandidato}>Numero {numeroL?numero:null}</Text>
           </View>
           <View style={style.boxTexto}>
-            <Text style={style.texto}>Candidato: Franciscinho</Text>
-            <Text style={style.texto}>Partido: Partido dos despartidos</Text>
+            <Text style={style.texto}>Candidato: {nomeL?nomeL: null}</Text>
+            <Text style={style.texto}>Partido: {partidoL?partidoL:null}</Text>
+            <Text style={style.texto}>Slogan: {sloganL?sloganL:null}</Text>
           </View>
         </View>
       </View>
@@ -75,20 +104,15 @@ function Urna() {
       <View style={style.baixo}>
         <View style={style.boxText}>
           <Text style={style.textoDados}>
-            Total de votos válidos apurados: 100
+            Total de votos válidos apurados: {totalVotos}
           </Text>
-          <Text style={style.textoDados}>
-            {' '}
-            .Candidato 97: 53 votos, 53% do total
-          </Text>
-          <Text style={style.textoDados}>
-            {' '}
-            .Candidato 17: 7 votos, 7% do total
-          </Text>
-          <Text style={style.textoDados}>
-            {' '}
-            .Candidato 13: 40 votos, 40% do total
-          </Text>
+          {Candidato.map(item => (
+            <Text key={item.numero} style={style.textoDados}>
+              {' '}
+              .Candidato {item.numero}: {item.votacao} votos,{' '}
+              {totalVotos ? ((item.votacao * 100) / totalVotos).toFixed(1) : 0}% do total
+            </Text>
+          ))}
         </View>
 
         <View
@@ -114,7 +138,7 @@ function Urna() {
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}>
-        <View style={style.background}>
+        <View style={style.backgroundModal}>
           <TouchableOpacity
             style={style.botaoVoltar}
             onPress={() => setModalVisible(false)}>
@@ -133,9 +157,15 @@ function Urna() {
                 />
               </View>
             </View>
-            <View style={{width: '90%', height: '35%',backgroundColor:"#F3F3F3",alignSelf:'center'}}>
+            <View
+              style={{
+                width: '90%',
+                height: '35%',
+                backgroundColor: '#F3F3F3',
+                alignSelf: 'center',
+              }}>
               <Image
-                style={{width: '100%', height: '100%', resizeMode: 'contain'}}
+                style={{width: '50%', height: '50%', resizeMode: 'contain'}}
                 source={perfil}
               />
             </View>
@@ -182,7 +212,7 @@ function Urna() {
                 <Text style={{color: 'black', fontWeight: '800'}}>Corrige</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => guardar('Confirma')}
+                onPress={() => confirmar()}
                 style={style.botaoConfirma}>
                 <Text style={{color: 'black', fontWeight: '800'}}>
                   Confirma{' '}
