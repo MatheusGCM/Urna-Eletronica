@@ -2,10 +2,11 @@ import {StyleSheet} from 'react-native';
 
 const style = StyleSheet.create({
   background: {
-    flex: 1,
+    width:'100%',
+    height:'100%',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    backgroundColor: '#40E0D0',
+    backgroundColor: '#DCDCDC',
   },
   header:{
     height:100,
@@ -15,7 +16,7 @@ const style = StyleSheet.create({
   textHeader:{
     fontSize:20,
     fontWeight:'800',
-    color:'white'
+    color:'black'
   },
   botaoVoltar:{
     position:'absolute',
@@ -24,15 +25,25 @@ const style = StyleSheet.create({
     right:8
   },
   container: {
-    width: '100%',
-    height: 140,
-    backgroundColor: '#F3F3F3',
+    width: '98%',
+    height: 160,
+    backgroundColor: '#FFF',
     marginVertical: 5,
     flexDirection:'row',
     borderRadius:10,
-    borderWidth:1,
+    borderRightWidth:3,
+    borderBottomWidth:2,
     borderColor:'#111',
-    flexWrap:'wrap'
+    flexWrap:'wrap',
+    alignSelf:'center',
+    shadowColor: 'black',
+    shadowRadius: 10,
+    shadowOpacity: 0.1,
+    elevation: 8,
+    shadowOffset: {
+      width: 10,
+      height: 10,
+    },
   },
   foto:{
     height:'100%',
@@ -49,7 +60,8 @@ const style = StyleSheet.create({
     paddingLeft:10
   },
   textDados:{
-    fontWeight:'700'
+    fontWeight:'700',
+    color:'black'
   }
 });
 export default style;

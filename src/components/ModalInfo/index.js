@@ -10,7 +10,7 @@ function ModalInfo({modalInfo,setModalInfo}) {
     <TouchableOpacity
       style={style.botaoVoltar}
       onPress={() => setModalInfo(!modalInfo)}>
-      <Icon size={40} color={'white'} name="close" />
+      <Icon size={40} color={'black'} name="close" />
     </TouchableOpacity>
     <Text style={style.textHeader}>Candidatos:</Text>
     </>
@@ -34,7 +34,7 @@ function ModalInfo({modalInfo,setModalInfo}) {
                 <View style={style.foto}> 
                     
                     <Image style={{width:90,height:80,resizeMode:'contain',borderRadius:10}} source={item.img} />
-                    <Text style={{textAlign:'center',fontWeight:'800'}}>{item.nome}</Text>
+                    <Text style={{textAlign:'center',fontWeight:'800',color:'black'}}>{item.nome}</Text>
                 </View>
                 <View style={style.dados}>
                 <Text style={style.textDados}>Numero: {item.numero}</Text>

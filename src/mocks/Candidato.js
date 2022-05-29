@@ -13,7 +13,7 @@ const Candidato = [
         numero: '13',
         partido: "PQQ",
         slogan: "Comigo é diferente",
-        img: require("../assets/candidatos/Faustino.jpeg"),
+        img: require("../assets/candidatos/Fabio.png"),
         votacao: 0
     },
      {

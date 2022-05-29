@@ -23,6 +23,8 @@ function Urna() {
   const [slogan, setSlogan] = useState('');
   const [perfil, setPerfil] = useState();
   const [totalVotos, setTotalVotos] = useState(0);
+  const [totalBranco, setTotalBranco] = useState(0);
+  const [totalNulo, setTotalNulo] = useState(0);
 
   const [nomeL, setNomeL] = useState('');
   const [partidoL, setPartidoL] = useState('');
@@ -40,8 +42,14 @@ function Urna() {
           setPerfil(item.img);
           console.log(item);
         }
+        if(numero == '00'){
+          setNome('Nulo');
+          setPartido('Nulo');
+          setSlogan('Nulo');
+        } 
       });
-    } else {
+    }
+    else {
       setNome('');
       setPartido('');
       setSlogan('');
@@ -70,13 +78,10 @@ function Urna() {
           setSlogan('');
           setPerfil();
           setNumero([]);
-        }
-      });
-    }
-  }
-
-  function branco(){
-    setModalVisible(false);
+        } else if (numero == '00') {
+          setTotalVotos(totalVotos + 1);
+          setTotalNulo(totalNulo + 1);
+          setModalVisible(false);
           setNomeL('----');
           setPartidoL('----');
           setSloganL('----');
@@ -87,6 +92,27 @@ function Urna() {
           setSlogan('');
           setPerfil();
           setNumero([]);
+        }
+        else{
+          null
+        }
+      });
+    }
+  }
+  function branco() {
+    setModalVisible(false);
+    setTotalVotos(totalVotos+1)
+    setTotalBranco(totalBranco + 1);
+    setNomeL('----');
+    setPartidoL('----');
+    setSloganL('----');
+    setPerfilL(require('../../assets/PerfilVazio.png'));
+    setNumeroL([]);
+    setNome('');
+    setPartido('');
+    setSlogan('');
+    setPerfil();
+    setNumero([]);
   }
 
   return (
@@ -122,13 +148,13 @@ function Urna() {
             setModalInfo(true);
           }}
           style={style.botaoInfo}>
-          <Text style={{color: 'white'}}>Informação</Text>
+          <Text style={{color: 'white',fontSize: 15}}>Candidatos</Text>
         </TouchableOpacity>
         <ModalInfo modalInfo={modalInfo} setModalInfo={setModalInfo} />
         <TouchableOpacity
           style={style.botaoVotar}
           onPress={() => setModalVisible(true)}>
-          <Text style={{color: 'white', fontSize: 50}}>Votar</Text>
+          <Text style={{color: 'white', fontSize: 15}}>Votar</Text>
         </TouchableOpacity>
       </View>
 
@@ -137,9 +163,17 @@ function Urna() {
           data={Candidato}
           keyExtractor={item => item.numero}
           ListHeaderComponent={
-            <Text style={style.textoDados}>
-              Total de votos válidos apurados: {totalVotos}
-            </Text>
+            <>
+              <Text style={style.textoDados}>
+                Total de votos válidos apurados: {totalVotos}
+              </Text>
+              <Text style={style.textoDados}>
+                Votos branco: {totalBranco}, {totalBranco?((totalBranco*100)/totalVotos).toFixed(1):0}% do total
+              </Text>
+              <Text style={style.textoDados}>
+                Votos nulo: {totalNulo}, {totalNulo?((totalNulo*100)/totalVotos).toFixed(1):0}% do total
+              </Text>
+            </>
           }
           ListHeaderComponentStyle={style.HFlat}
           ListFooterComponent={<View></View>}
@@ -153,21 +187,6 @@ function Urna() {
             </Text>
           )}
         />
-        <View
-          style={{
-            width: '100%',
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-          }}>
-          <Image
-            style={{width: 120, height: 50, resizeMode: 'contain'}}
-            source={require('../../assets/TRPE.png')}
-          />
-          <Image
-            style={{width: 120, height: 40}}
-            source={require('../../assets/GovernoF.png')}
-          />
-        </View>
       </View>
 
       <Modal
@@ -199,8 +218,13 @@ function Urna() {
             <View style={style.containerModal}>
               <View style={style.imageModal}>
                 <Image
-                  style={{width: 100, height: 100, resizeMode: 'contain',borderRadius:10}}
-                  source={perfil}
+                  style={{
+                    width: 100,
+                    height: 100,
+                    resizeMode: 'contain',
+                    borderRadius: 10,
+                  }}
+                  source={perfil? perfil: require('../../assets/PerfilVazio.png')}
                 />
                 <Text style={style.textoCandidato}>
                   Número {numero ? numero : null}
