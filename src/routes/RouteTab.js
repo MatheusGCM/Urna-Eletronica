@@ -5,6 +5,7 @@ import Urna from '../Telas/Urna';
 import Inicial from '../Telas/Inicial';
 import Sobre from '../Telas/Sobre';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import Teste from '../Telas/teste'
 
 function RouteTab() {
   const Tab = createBottomTabNavigator();

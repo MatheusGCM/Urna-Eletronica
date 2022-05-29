@@ -2,17 +2,19 @@ import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   Image,
   TouchableOpacity,
   Modal,
+  FlatList,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import style from './style';
 import Candidato from '../../mocks/Candidato';
+import ModalInfo from '../../components/ModalInfo';
 
 function Urna() {
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalInfo, setModalInfo] = useState(false);
   const lista = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
   const [numero, setNumero] = useState([]);
   const [candidato, setCandidato] = useState(Candidato);
@@ -27,7 +29,6 @@ function Urna() {
   const [sloganL, setSloganL] = useState('');
   const [perfilL, setPerfilL] = useState();
   const [numeroL, setNumeroL] = useState([]);
-
 
   useEffect(() => {
     if (numero.length === 2) {
@@ -63,15 +64,29 @@ function Urna() {
           setPartidoL(item.partido);
           setSloganL(item.slogan);
           setPerfilL(item.img);
-          setNumeroL(numero)
+          setNumeroL(numero);
           setNome('');
           setPartido('');
           setSlogan('');
           setPerfil();
-          setNumero([])
+          setNumero([]);
         }
       });
     }
+  }
+
+  function branco(){
+    setModalVisible(false);
+          setNomeL('----');
+          setPartidoL('----');
+          setSloganL('----');
+          setPerfilL(require('../../assets/PerfilVazio.png'));
+          setNumeroL([]);
+          setNome('');
+          setPartido('');
+          setSlogan('');
+          setPerfil();
+          setNumero([]);
   }
 
   return (
@@ -81,19 +96,35 @@ function Urna() {
           <View style={style.boxImage}>
             <Image
               style={style.candidato}
-              source={perfilL}
+              source={
+                perfilL ? perfilL : require('../../assets/PerfilVazio.png')
+              }
             />
-            <Text style={style.numeroCandidato}>Numero {numeroL?numero:null}</Text>
+            <Text style={style.numeroCandidato}>
+              Numero {numeroL ? numeroL : null}
+            </Text>
           </View>
           <View style={style.boxTexto}>
-            <Text style={style.texto}>Candidato: {nomeL?nomeL: null}</Text>
-            <Text style={style.texto}>Partido: {partidoL?partidoL:null}</Text>
-            <Text style={style.texto}>Slogan: {sloganL?sloganL:null}</Text>
+            <Text style={style.texto}>Candidato: {nomeL ? nomeL : '----'}</Text>
+            <Text style={style.texto}>
+              Partido: {partidoL ? partidoL : '----'}
+            </Text>
+            <Text style={style.texto}>
+              Slogan: {sloganL ? sloganL : '----'}
+            </Text>
           </View>
         </View>
       </View>
 
       <View style={style.meio}>
+        <TouchableOpacity
+          onPress={() => {
+            setModalInfo(true);
+          }}
+          style={style.botaoInfo}>
+          <Text style={{color: 'white'}}>Informação</Text>
+        </TouchableOpacity>
+        <ModalInfo modalInfo={modalInfo} setModalInfo={setModalInfo} />
         <TouchableOpacity
           style={style.botaoVotar}
           onPress={() => setModalVisible(true)}>
@@ -102,19 +133,26 @@ function Urna() {
       </View>
 
       <View style={style.baixo}>
-        <View style={style.boxText}>
-          <Text style={style.textoDados}>
-            Total de votos válidos apurados: {totalVotos}
-          </Text>
-          {Candidato.map(item => (
+        <FlatList
+          data={Candidato}
+          keyExtractor={item => item.numero}
+          ListHeaderComponent={
+            <Text style={style.textoDados}>
+              Total de votos válidos apurados: {totalVotos}
+            </Text>
+          }
+          ListHeaderComponentStyle={style.HFlat}
+          ListFooterComponent={<View></View>}
+          ListFooterComponentStyle={{height: 5}}
+          renderItem={({item}) => (
             <Text key={item.numero} style={style.textoDados}>
               {' '}
               .Candidato {item.numero}: {item.votacao} votos,{' '}
-              {totalVotos ? ((item.votacao * 100) / totalVotos).toFixed(1) : 0}% do total
+              {totalVotos ? ((item.votacao * 100) / totalVotos).toFixed(1) : 0}%
+              do total
             </Text>
-          ))}
-        </View>
-
+          )}
+        />
         <View
           style={{
             width: '100%',
@@ -131,6 +169,7 @@ function Urna() {
           />
         </View>
       </View>
+
       <Modal
         transparent={false}
         visible={modalVisible}
@@ -157,34 +196,27 @@ function Urna() {
                 />
               </View>
             </View>
-            <View
-              style={{
-                width: '90%',
-                height: '35%',
-                backgroundColor: '#F3F3F3',
-                alignSelf: 'center',
-              }}>
-              <Image
-                style={{width: '50%', height: '50%', resizeMode: 'contain'}}
-                source={perfil}
-              />
-            </View>
-            <View
-              style={{
-                width: '100%',
-                height: '35%',
-                paddingHorizontal: 20,
-                paddingVertical: 15,
-              }}>
-              <Text style={style.textoCandidato}>
-                Candidato: {nome ? nome : null}
-              </Text>
-              <Text style={style.textoCandidato}>
-                Número: {numero ? numero : null}
-              </Text>
-              <Text style={style.textoCandidato}>
-                Partido: {partido ? partido : null}
-              </Text>
+            <View style={style.containerModal}>
+              <View style={style.imageModal}>
+                <Image
+                  style={{width: 100, height: 100, resizeMode: 'contain',borderRadius:10}}
+                  source={perfil}
+                />
+                <Text style={style.textoCandidato}>
+                  Número {numero ? numero : null}
+                </Text>
+              </View>
+              <View style={style.dadosModal}>
+                <Text style={style.textoDadosModal}>
+                  Candidato: {nome ? nome : '----'}
+                </Text>
+                <Text style={style.textoDadosModal}>
+                  Partido: {partido ? partido : '----'}
+                </Text>
+                <Text style={style.textoDadosModal}>
+                  Slogan: {slogan ? slogan : '----'}
+                </Text>
+              </View>
             </View>
           </View>
           <View style={style.teclado}>
@@ -200,7 +232,7 @@ function Urna() {
             </View>
             <View style={style.textoTeclado}>
               <TouchableOpacity
-                onPress={() => guardar('branco')}
+                onPress={() => branco()}
                 style={style.botaoBranco}>
                 <Text style={{color: 'black', fontWeight: '800'}}>Branco</Text>
               </TouchableOpacity>

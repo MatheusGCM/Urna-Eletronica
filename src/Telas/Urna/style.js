@@ -26,8 +26,6 @@ const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: 'blue',
   },
 
   boxImage: {
@@ -50,8 +48,8 @@ const style = StyleSheet.create({
   boxTexto: {
     width: '60%',
     height: '100%',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    justifyContent: 'space-evenly',
     paddingVertical: 25,
     flexWrap: 'wrap',
   },
@@ -63,12 +61,29 @@ const style = StyleSheet.create({
   meio: {
     width: '100%',
     height: '30%',
-    paddingTop: 10,
-    flexDirection: 'row',
+    paddingTop: 2,
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     borderBottomWidth: 4,
     borderBottomColor: '#478F0F',
+  },
+  botaoInfo: {
+    backgroundColor: '#a290e5',
+    width: 100,
+    height: 40,
+    marginBottom: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    shadowColor: 'black',
+    shadowRadius: 10,
+    shadowOpacity: 0.1,
+    elevation: 8,
+    shadowOffset: {
+      width: 10,
+      height: 10,
+    },
   },
   botaoVotar: {
     backgroundColor: '#006315',
@@ -91,6 +106,9 @@ const style = StyleSheet.create({
     height: '30%',
     backgroundColor: '#E3D4D0',
   },
+  HFlat: {
+    marginVertical: 5,
+  },
   boxText: {
     width: '80%',
     height: '70%',
@@ -101,6 +119,7 @@ const style = StyleSheet.create({
   textoDados: {
     fontSize: 15,
     fontWeight: '800',
+    paddingHorizontal: 20,
   },
 
   //Modal (
@@ -118,9 +137,10 @@ const style = StyleSheet.create({
     borderRadius: 10,
     alignSelf: 'flex-end',
   },
+  //--------------
   containerView: {
     width: '100%',
-    height: '49%',
+    height: '45%',
   },
   boxTextoVoto: {
     width: '60%',
@@ -137,14 +157,46 @@ const style = StyleSheet.create({
     width: '40%',
     height: '100%',
   },
+  //------------------
+  containerModal: {
+    width: '90%',
+    height: '55%',
+    backgroundColor: '#F3F3F3',
+    alignSelf: 'center',
+    flexDirection: 'row',
+    borderRadius:10
+  },
+  imageModal: {
+    height: '100%',
+    width: '40%',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
   textoCandidato: {
     color: 'black',
     fontSize: 18,
-    fontWeight: '800',
+    fontWeight: '500',
   },
+  dadosModal: {
+    width: '60%',
+    height: '100%',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    paddingVertical: 25,
+    flexWrap: 'wrap',
+    paddingLeft:5
+  },
+  textoDadosModal:{
+    color: 'black',
+    fontSize: 11,
+    fontWeight:'500'
+    
+  },
+  //-----------------
+ 
   teclado: {
     width: '90%',
-    height: '43%',
+    height: '46%',
     backgroundColor: '#3A3126',
     borderRadius: 5,
   },
