@@ -42,14 +42,13 @@ function Urna() {
           setPerfil(item.img);
           console.log(item);
         }
-        if(numero == '00'){
+        if (numero == '00') {
           setNome('Nulo');
           setPartido('Nulo');
           setSlogan('Nulo');
-        } 
+        }
       });
-    }
-    else {
+    } else {
       setNome('');
       setPartido('');
       setSlogan('');
@@ -58,7 +57,9 @@ function Urna() {
   }, [numero]);
 
   function guardar(dados) {
-    if (numero.length < 2) setNumero(numero + dados);
+    if (numero.length < 2) {
+      setNumero(numero + dados);
+    }
   }
 
   function confirmar() {
@@ -92,16 +93,15 @@ function Urna() {
           setSlogan('');
           setPerfil();
           setNumero([]);
-        }
-        else{
-          null
+        } else {
+          null;
         }
       });
     }
   }
   function branco() {
     setModalVisible(false);
-    setTotalVotos(totalVotos+1)
+    setTotalVotos(totalVotos + 1);
     setTotalBranco(totalBranco + 1);
     setNomeL('----');
     setPartidoL('----');
@@ -127,7 +127,7 @@ function Urna() {
               }
             />
             <Text style={style.numeroCandidato}>
-              Numero {numeroL ? numeroL : null}
+              Número {numeroL ? numeroL : null}
             </Text>
           </View>
           <View style={style.boxTexto}>
@@ -144,49 +144,64 @@ function Urna() {
 
       <View style={style.meio}>
         <TouchableOpacity
+          style={style.botaoVotar}
+          onPress={() => setModalVisible(true)}>
+          <Text style={{color: 'white', fontSize: 30, fontWeight: '700'}}>
+            VOTAR
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           onPress={() => {
             setModalInfo(true);
           }}
           style={style.botaoInfo}>
-          <Text style={{color: 'white',fontSize: 15}}>Candidatos</Text>
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 17,
+              fontWeight: '600',
+              fontStyle: 'italic',
+            }}>
+            Candidatos
+          </Text>
         </TouchableOpacity>
         <ModalInfo modalInfo={modalInfo} setModalInfo={setModalInfo} />
-        <TouchableOpacity
-          style={style.botaoVotar}
-          onPress={() => setModalVisible(true)}>
-          <Text style={{color: 'white', fontSize: 15}}>Votar</Text>
-        </TouchableOpacity>
       </View>
 
       <View style={style.baixo}>
-        <FlatList
-          data={Candidato}
-          keyExtractor={item => item.numero}
-          ListHeaderComponent={
-            <>
-              <Text style={style.textoDados}>
-                Total de votos válidos apurados: {totalVotos}
+        <>
+          <Text style={style.textoDados}>
+            Total de votos válidos apurados: {totalVotos}
+          </Text>
+          <Text style={style.textoDados}>
+            Votos branco: {totalBranco},{' '}
+            {totalBranco ? ((totalBranco * 100) / totalVotos).toFixed(1) : 0}%
+            do total
+          </Text>
+          <Text style={style.textoDados}>
+            Votos nulo: {totalNulo},{' '}
+            {totalNulo ? ((totalNulo * 100) / totalVotos).toFixed(1) : 0}% do
+            total
+          </Text>
+        </>
+        <View style={style.boxDados}>
+          <FlatList
+            data={Candidato}
+            keyExtractor={item => item.numero}
+            ListFooterComponent={<View />}
+            ListFooterComponentStyle={{height: 5}}
+            renderItem={({item}) => (
+              <Text key={item.numero} style={style.textoDados2}>
+                {' '}
+                Candidato {item.numero}: {item.votacao} votos,{' '}
+                {totalVotos
+                  ? ((item.votacao * 100) / totalVotos).toFixed(1)
+                  : 0}
+                % do total
               </Text>
-              <Text style={style.textoDados}>
-                Votos branco: {totalBranco}, {totalBranco?((totalBranco*100)/totalVotos).toFixed(1):0}% do total
-              </Text>
-              <Text style={style.textoDados}>
-                Votos nulo: {totalNulo}, {totalNulo?((totalNulo*100)/totalVotos).toFixed(1):0}% do total
-              </Text>
-            </>
-          }
-          ListHeaderComponentStyle={style.HFlat}
-          ListFooterComponent={<View></View>}
-          ListFooterComponentStyle={{height: 5}}
-          renderItem={({item}) => (
-            <Text key={item.numero} style={style.textoDados}>
-              {' '}
-              .Candidato {item.numero}: {item.votacao} votos,{' '}
-              {totalVotos ? ((item.votacao * 100) / totalVotos).toFixed(1) : 0}%
-              do total
-            </Text>
-          )}
-        />
+            )}
+          />
+        </View>
       </View>
 
       <Modal
@@ -224,7 +239,9 @@ function Urna() {
                     resizeMode: 'contain',
                     borderRadius: 10,
                   }}
-                  source={perfil? perfil: require('../../assets/PerfilVazio.png')}
+                  source={
+                    perfil ? perfil : require('../../assets/PerfilVazio.png')
+                  }
                 />
                 <Text style={style.textoCandidato}>
                   Número {numero ? numero : null}
@@ -250,7 +267,10 @@ function Urna() {
                   onPress={() => guardar(item)}
                   key={index}
                   style={style.botaoN}>
-                  <Text style={{color: '#FFFFFF'}}>{item}</Text>
+                  <Text
+                    style={{color: '#fff', fontSize: 20, fontWeight: '700'}}>
+                    {item}
+                  </Text>
                 </TouchableOpacity>
               ))}
             </View>
@@ -258,19 +278,41 @@ function Urna() {
               <TouchableOpacity
                 onPress={() => branco()}
                 style={style.botaoBranco}>
-                <Text style={{color: 'black', fontWeight: '800'}}>Branco</Text>
+                <Text
+                  style={{
+                    color: 'black',
+                    fontSize: 19,
+                    fontWeight: '700',
+                    fontFamily: 'Roboto',
+                  }}>
+                  Branco
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
                   setNumero([]);
                 }}
                 style={style.botaoCorrige}>
-                <Text style={{color: 'black', fontWeight: '800'}}>Corrige</Text>
+                <Text
+                  style={{
+                    color: 'black',
+                    fontSize: 19,
+                    fontWeight: '700',
+                    fontFamily: 'Roboto',
+                  }}>
+                  Corrige
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => confirmar()}
                 style={style.botaoConfirma}>
-                <Text style={{color: 'black', fontWeight: '800'}}>
+                <Text
+                  style={{
+                    color: 'black',
+                    fontSize: 20,
+                    fontWeight: '700',
+                    fontFamily: 'Roboto',
+                  }}>
                   Confirma{' '}
                 </Text>
               </TouchableOpacity>

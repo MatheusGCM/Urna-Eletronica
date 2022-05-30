@@ -27,22 +27,38 @@ function Sobre() {
           <Text style={style.textoDescricao}>
             Este Aplicativo foi desenvolvido por:
           </Text>
-          <Text style={style.textCriador}>Nome e SobreNome</Text>
-          <Text style={style.textCriador}>Nome e SobreNome</Text>
-          <Text style={style.textCriador}>Nome e SobreNome</Text>
-          <Text style={style.textCriador}>Nome e SobreNome</Text>
-          <Text style={style.textCriador}>Nome e SobreNome</Text>
+          <Text style={style.textCriador}>
+            Kleber Andrade - Codificação/Estilização
+          </Text>
+          <Text style={style.textCriador}>
+            Matheus Guilherme - Codificação/Estilização
+          </Text>
+          <Text style={style.textCriador}>Maria Luiza - Estilização</Text>
+          <Text style={style.textCriador}>Antonio Faustino - Estilização</Text>
+          <Text style={style.textCriador}>Fabio Araújo - Codificação</Text>
         </View>
         <View style={style.logo}>
-          <View style={{width:120,height:55,alignItems:'center',justifyContent:'center'}}>
+          <View
+            style={{
+              width: 170,
+              height: 30,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
             <Image
-              style={{width: '100%', height: '100%', resizeMode: 'contain'}}
+              style={{width: 200, height: 70, resizeMode: 'contain'}}
               source={require('../../assets/TRPE.png')}
             />
           </View>
-          <View style={{width:120,height:55, alignItems:'center',justifyContent:'center'}}>
+          <View
+            style={{
+              width: 120,
+              height: 30,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
             <Image
-              style={{width: '100%', height: '100%', resizeMode: 'contain'}}
+              style={{width: 200, height: 70, resizeMode: 'contain'}}
               source={require('../../assets/Brasil.png')}
             />
           </View>
