@@ -1,26 +1,28 @@
 const Candidato = [
-  {
-    nome: 'Kleber',
-    numero: '12',
-    partido: 'PLL',
-    slogan: 'Comigo o Brasil vai mudar.',
-    img: require('../assets/candidatos/Kleber.png'),
-    votacao: 0,
-  },
-  {
-    nome: 'Fabio',
-    numero: '13',
-    partido: 'PQQ',
-    slogan: 'Comigo é diferente.',
-    img: require('../assets/candidatos/Fabio.png'),
-    votacao: 0,
-  },
+
+
   {
     nome: 'Matheus',
     numero: '42',
     partido: 'Partido Novo Porém Antigo(PNPA)',
     slogan: 'Para o fim da corrupção e inicio de mais, vote PNPA.',
     img: require('../assets/candidatos/Matheus.jpeg'),
+    votacao: 0,
+  },
+  {
+    nome: 'Kleber',
+    numero: '12',
+    partido: 'Partido Novo Porém Antigo (PNPA)',
+    slogan: 'Comigo o Brasil vai mudar e a corrupção aumentar',
+    img: require('../assets/candidatos/Kleber.jpg'),
+    votacao: 0,
+  },
+  {
+    nome: 'Fabio',
+    numero: '11',
+    partido: 'Partido Mestre (PM)',
+    slogan: 'Para o Brasil melhorar no mestre você deve votar',
+    img: require('../assets/candidatos/Fabio.png'),
     votacao: 0,
   },
   {

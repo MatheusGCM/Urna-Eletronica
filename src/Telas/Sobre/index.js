@@ -37,32 +37,7 @@ function Sobre() {
           <Text style={style.textCriador}>Antonio Faustino - Estilização</Text>
           <Text style={style.textCriador}>Fabio Araújo - Codificação</Text>
         </View>
-        <View style={style.logo}>
-          <View
-            style={{
-              width: 170,
-              height: 30,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Image
-              style={{width: 200, height: 70, resizeMode: 'contain'}}
-              source={require('../../assets/TRPE.png')}
-            />
-          </View>
-          <View
-            style={{
-              width: 120,
-              height: 30,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Image
-              style={{width: 200, height: 70, resizeMode: 'contain'}}
-              source={require('../../assets/Brasil.png')}
-            />
-          </View>
-        </View>
+        
       </View>
     </View>
   );
